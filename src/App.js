@@ -8,14 +8,16 @@ export default function App() {
   const baseURL = "https://cooking-aloud-server-cmaq3kqazq-ey.a.run.app/api/";
 
   useEffect(() => {
-    axios.get(baseURL + "/users").then((response) => {
+    axios.get(baseURL + "users").then((response) => {
       setUserData(response.data);
     });
-    axios.get(baseURL + "/admins").then((response) => {
+    axios.get(baseURL + "admins").then((response) => {
       setAdminData(response.data);
     });
   }, []);
 
+  console.log(userData);
+  console.log(adminData);
   return (
     <div>
       <div>USERS</div>
