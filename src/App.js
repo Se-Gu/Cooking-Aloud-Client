@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function App() {
   const [userData, setUserData] = useState([{}]);
   const [adminData, setAdminData] = useState([{}]);
 
+  const baseURL = "https://cooking-aloud-server-cmaq3kqazq-ey.a.run.app/api/";
+
   useEffect(() => {
-    fetch("/api/users")
-      .then((response) => response.json())
-      .then((data) => {
-        setUserData(data);
-      });
-    fetch();
-    fetch("/api/admins")
-      .then((response) => response.json())
-      .then((data) => {
-        setAdminData(data);
-      });
-    fetch();
+    axios.get(baseURL + "/users").then((response) => {
+      setUserData(response.data);
+    });
+    axios.get(baseURL + "/admins").then((response) => {
+      setAdminData(response.data);
+    });
   }, []);
 
   return (
