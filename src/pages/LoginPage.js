@@ -7,9 +7,11 @@ import {
   Button,
   Grid,
 } from "@material-ui/core";
-import { useSignIn, useIsAuthenticated } from "react-auth-kit";
+import { useSignIn, useAuthUser, useAuthHeader, useIsAuthenticated } from "react-auth-kit";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+
+const baseURL = "http://localhost:8080/api/"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,6 +36,8 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
+  const auth = useAuthUser();
+  const authHeader = useAuthHeader();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -50,21 +54,22 @@ const LoginPage = () => {
     console.log("Password:", password);
     try {
       const response = await axios.post(
-        "https://api.escuelajs.co/api/v1/auth/login",
+        baseURL + "login",
         {
           email: email,
           password: password,
         }
       );
-      signIn({
-        token: response.data.access_token,
-        expiresIn: 3600,
-        tokenType: "Bearer",
-        authState: { email: email },
-      });
-      nav("/");
-
-      console.log(response);
+	  if (response.data.success){
+		  signIn({
+			token: response.data.token,
+			expiresIn: 3600,
+			tokenType: "Bearer",
+			authState: response.data.data,
+		  });
+		  nav("/");
+	  }
+	  
     } catch (err) {
       console.log(err);
     }
