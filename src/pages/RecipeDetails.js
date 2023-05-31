@@ -56,20 +56,59 @@ const RecipeDetails = () => {
     window.location.href = link;
   };
 
-  const checkFavorite = () => {
+  const checkFavorite = async () => {
+    const response = await axios.post(
+      baseURL + "checkfavorite",
+      {
+        mealid: params.rid,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + auth().token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     // Your logic to check if it's favorited goes here
     // For example, you can check if the recipe id exists in a favorites list
     // and return true or false accordingly
-    return isFavorite;
+    setIsFavorite(response.data.data.exists);
+    return response.data.data.exists;
+
   };
 
-  const toggleFavorite = () => {
-    let newState = !isFavorite;
-    if (newState){
-      console.log("asd");
+  const toggleFavorite = async () => {
+    if (isFavorite){
+      const response = await axios.post(
+        baseURL + "removefavorite",
+        {
+          mealid: params.rid
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + auth().token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
     else{
-
+      const response = await axios.post(
+        baseURL + "addfavorite",
+        {
+          mealid: params.rid,
+          mealtitle: recipe.title
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + auth().token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
     setIsFavorite(!isFavorite);
     // Your logic to handle toggling the favorite state goes here
@@ -98,6 +137,7 @@ const RecipeDetails = () => {
     
     const response = fetchFavorites().catch(console.error);
     const response2 = fetchRecipe().catch(console.error);
+    const response3 = checkFavorite().catch(console.error);
     //const recipeData = response2.data;
     /*
     const recipeData = {
@@ -433,11 +473,11 @@ const RecipeDetails = () => {
       <h4 className="recipe-title">
         {recipe.title}
         <span
-          className={`favorite-icon ${checkFavorite() ? "filled" : ""}`}
+          className={`favorite-icon ${isFavorite ? "filled" : ""}`}
           onClick={toggleFavorite}
           style={{ marginLeft: "25px" }}
         >
-          {checkFavorite() ? (
+          {isFavorite ? (
             <FaHeart style={{ color: "red" }} />
           ) : (
             <FaRegHeart style={{ color: "red" }} />
