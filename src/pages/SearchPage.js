@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/Search.css";
 
 const SearchPage = () => {
   const [query, setQuery] = useState("");
@@ -11,24 +12,17 @@ const SearchPage = () => {
   };
 
   return (
-    <div>
+    <div className="search-container">
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for recipes"
+        className="search-input"
       />
-      <button onClick={search}>Search</button>
-
-      {searchResults.length > 0 ? (
-        <ul>
-          {searchResults.map((recipe) => (
-            <li key={recipe.id}>{recipe.title}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No results found</p>
-      )}
+      <button onClick={search} className="search-button">
+        Search
+      </button>
     </div>
   );
 };

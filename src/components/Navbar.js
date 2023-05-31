@@ -24,6 +24,9 @@ export const Navbar = () => {
             <Button href="/profile" color="inherit">
               Profile
             </Button>
+            <Button href="/searchpage" color="inherit">
+              Search Recipes
+            </Button>
           </div>
         ) : (
           <div>
@@ -32,6 +35,9 @@ export const Navbar = () => {
             </Button>
             <Button href="/register" color="inherit">
               Register
+            </Button>
+            <Button href="/searchpage" color="inherit">
+              Search Recipes
             </Button>
           </div>
         )}

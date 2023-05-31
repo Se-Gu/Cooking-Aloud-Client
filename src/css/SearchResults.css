@@ -1,0 +1,32 @@
+.search-results-container {
+  margin-top: 20px;
+}
+
+.search-results-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.search-results-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
+}
+
+.search-result-item {
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.search-result-item span {
+  font-size: 16px;
+}
+
+.view-details-link {
+  color: #007bff;
+  text-decoration: none;
+}
