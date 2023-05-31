@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/RecipeInstructions.css";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 const baseURL = "http://localhost:8080/api/";
 
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RecipeInstructions = () => {
+  const { speak } = useSpeechSynthesis();
   const signIn = useSignIn();
   const classes = useStyles();
   const isAuthenticated = useIsAuthenticated();
@@ -401,6 +403,13 @@ const RecipeInstructions = () => {
     setRecipe(recipeData);
   }, []);
 
+  const handleTTS = () => {
+    recipe?.analyzedInstructions[0].steps.forEach((step) => {
+      const stepText = "Step " + step.number + ": " + step.step;
+      speak({ text: stepText });
+    });
+  };
+
   return (
     <div className="recipe-instructions-container">
       <h4 className="recipe-instructions-title">{recipe?.title}</h4>
@@ -419,6 +428,9 @@ const RecipeInstructions = () => {
           </div>
         ))}
       </div>
+      <button className="recipe-button" onClick={handleTTS}>
+        Listen to the instructions
+      </button>
     </div>
   );
 };
