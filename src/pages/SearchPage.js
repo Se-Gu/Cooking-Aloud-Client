@@ -13,6 +13,13 @@ const SearchPage = () => {
 
   return (
     <div className="search-container">
+      <div className="image-container">
+        <img
+          src="https://images.unsplash.com/photo-1514986888952-8cd320577b68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1176&q=80"
+          alt="Cooking Image"
+          className="cooking-image"
+        />
+      </div>
       <input
         type="text"
         value={query}
