@@ -66,7 +66,7 @@ const RecipeDetails = () => {
   const toggleFavorite = () => {
     let newState = !isFavorite;
     if (newState){
-      
+      console.log("asd");
     }
     else{
 

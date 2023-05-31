@@ -76,9 +76,9 @@ const RecipeSearchResults = () => {
     //console.log(params);
 
     //const response = fetchFavorites().catch(console.error);
-    //const response2 = fetchResults().catch(console.error);
+    const response2 = fetchResults().catch(console.error);
 
-    const resultData = {
+    /*const resultData = {
       results: [
         {
           id: 659081,
@@ -146,7 +146,7 @@ const RecipeSearchResults = () => {
       totalResults: 79,
     };
     resultData.query = params.query;
-    setResults(resultData);
+    setResults(resultData);*/
   }, []);
 
   return (

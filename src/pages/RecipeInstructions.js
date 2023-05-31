@@ -63,6 +63,13 @@ const RecipeInstructions = () => {
       console.log(recipeData);
   };
 
+  const changeFavorite = async (rid) => {
+    const response2 = await axios.get(baseURL + "recipe/" + params.rid);
+    const recipeData = response2.data;
+      setRecipe(recipeData);
+      console.log(recipeData);
+  };
+
   useEffect(() => {
     //console.log(params);
     const fetchFavorites = async () => {
