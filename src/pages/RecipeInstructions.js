@@ -59,15 +59,15 @@ const RecipeInstructions = () => {
   const fetchRecipe = async () => {
     const response2 = await axios.get(baseURL + "recipe/" + params.rid);
     const recipeData = response2.data;
-      setRecipe(recipeData);
-      console.log(recipeData);
+    setRecipe(recipeData);
+    console.log(recipeData);
   };
 
   const changeFavorite = async (rid) => {
     const response2 = await axios.get(baseURL + "recipe/" + params.rid);
     const recipeData = response2.data;
-      setRecipe(recipeData);
-      console.log(recipeData);
+    setRecipe(recipeData);
+    console.log(recipeData);
   };
 
   useEffect(() => {
@@ -412,13 +412,12 @@ const RecipeInstructions = () => {
       originalId: null,
     };
     */
-
   }, []);
 
   const handleTTS = () => {
     recipe?.analyzedInstructions[0].steps.forEach((step) => {
       const stepText = "Step " + step.number + ": " + step.step;
-      speak({ text: stepText });
+      speak({ text: stepText, lang: "en-US" });
     });
   };
 
