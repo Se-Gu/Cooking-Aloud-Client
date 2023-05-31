@@ -6,12 +6,19 @@ import {
   TextField,
   Button,
   Grid,
+  Snackbar,
 } from "@material-ui/core";
-import { useSignIn, useAuthUser, useAuthHeader, useIsAuthenticated } from "react-auth-kit";
+import MuiAlert from "@material-ui/lab/Alert";
+import {
+  useSignIn,
+  useAuthUser,
+  useAuthHeader,
+  useIsAuthenticated,
+} from "react-auth-kit";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const baseURL = "http://localhost:8080/api/"
+const baseURL = "http://localhost:8080/api/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +45,9 @@ const RegisterPage = () => {
   const nav = useNavigate();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -47,30 +57,42 @@ const RegisterPage = () => {
     setPassword(e.target.value);
   };
 
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setErrorMessage("Please enter a valid email address");
+      setOpenSnackbar(true);
+      return;
+    }
+
     try {
-      const response = await axios.post(
-        baseURL + "register",
-        {
-          email: email,
-          password: password,
-        }
-      );
-	  if (response.data.success){
-		  signIn({
-			token: response.data.token,
-			expiresIn: 3600,
-			tokenType: "Bearer",
-			authState: response.data.data,
-		  });
-		  nav("/");
-	  }
-      
-	  
+      const response = await axios.post(baseURL + "register", {
+        email: email,
+        password: password,
+      });
+
+      if (response.data.success) {
+        setSuccessMessage("Registration successful!");
+        setOpenSnackbar(true);
+        signIn({
+          token: response.data.token,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: response.data.data,
+        });
+        nav("/");
+      } else {
+        setErrorMessage("Email is already taken");
+        setOpenSnackbar(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -125,6 +147,22 @@ const RegisterPage = () => {
         Already have an account? Login&nbsp;
         <Link to="/login">here</Link>
       </Typography>
+
+      {/* Snackbar for displaying error/success messages */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleCloseSnackbar}
+          severity={errorMessage ? "error" : "success"}
+        >
+          {errorMessage || successMessage}
+        </MuiAlert>
+      </Snackbar>
     </Container>
   );
 };
