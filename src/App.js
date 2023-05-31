@@ -6,6 +6,8 @@ import RegisterPage from "./pages/RegisterPage";
 import UserProfile from "./pages/UserProfile";
 import RecipeDetails from "./pages/RecipeDetails";
 import RecipeInstructions from "./pages/RecipeInstructions";
+import RecipeSearchResults from "./pages/RecipeSearchResults";
+import SearchPage from "./pages/SearchPage";
 
 export default function App() {
   return (
@@ -19,6 +21,8 @@ export default function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/recipedetails/:rid" element={<RecipeDetails />} />
           <Route path="/instructions/:rid" element={<RecipeInstructions />} />
+          <Route path="/search/:query" element={<RecipeSearchResults />} />
+          <Route path="/searchpage" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
     </div>
