@@ -64,29 +64,42 @@ const RecipeDetails = () => {
   };
 
   const toggleFavorite = () => {
+    let newState = !isFavorite;
+    if (newState){
+      
+    }
+    else{
+
+    }
     setIsFavorite(!isFavorite);
     // Your logic to handle toggling the favorite state goes here
   };
 
+  const fetchRecipe = async () => {
+    const response2 = await axios.get(baseURL + "recipe/" + params.rid);
+    const recipeData = response2.data;
+      setRecipe(recipeData);
+      console.log(recipeData);
+  };
+  const fetchFavorites = async () => {
+    const response = await axios.get(baseURL + "getfavorite", {
+      headers: {
+        Authorization: "Bearer " + auth().token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    //console.log(response.data);
+  };
+
+
   useEffect(() => {
     //console.log(params);
-    const fetchRecipe = async () => {
-      const response = await axios.get(baseURL + "recipe/" + params.rid);
-    };
-    const fetchFavorites = async () => {
-      const response = await axios.get(baseURL + "getfavorite", {
-        headers: {
-          Authorization: "Bearer " + auth().token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      //console.log(response.data);
-    };
-
+    
     const response = fetchFavorites().catch(console.error);
-    //const response2 = fetchRecipe().catch(console.error);
+    const response2 = fetchRecipe().catch(console.error);
     //const recipeData = response2.data;
+    /*
     const recipeData = {
       vegetarian: false,
       vegan: false,
@@ -411,8 +424,8 @@ const RecipeDetails = () => {
       ],
       originalId: null,
     };
-    console.log(recipeData);
-    setRecipe(recipeData);
+    */
+    //setRecipe(recipeData);
   }, []);
 
   return (

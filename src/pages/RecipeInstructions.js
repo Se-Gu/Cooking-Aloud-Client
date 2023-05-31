@@ -56,11 +56,15 @@ const RecipeInstructions = () => {
     window.location.href = link;
   };
 
+  const fetchRecipe = async () => {
+    const response2 = await axios.get(baseURL + "recipe/" + params.rid);
+    const recipeData = response2.data;
+      setRecipe(recipeData);
+      console.log(recipeData);
+  };
+
   useEffect(() => {
     //console.log(params);
-    const fetchRecipe = async () => {
-      const response = await axios.get(baseURL + "recipe/" + params.rid);
-    };
     const fetchFavorites = async () => {
       const response = await axios.get(baseURL + "getfavorite", {
         headers: {
@@ -73,8 +77,9 @@ const RecipeInstructions = () => {
     };
 
     const response = fetchFavorites().catch(console.error);
-    //const response2 = fetchRecipe().catch(console.error);
+    const response2 = fetchRecipe().catch(console.error);
     //const recipeData = response2.data;
+    /*
     const recipeData = {
       vegetarian: false,
       vegan: false,
@@ -399,8 +404,8 @@ const RecipeInstructions = () => {
       ],
       originalId: null,
     };
-    console.log(recipeData.analyzedInstructions[0].steps);
-    setRecipe(recipeData);
+    */
+
   }, []);
 
   const handleTTS = () => {
