@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/RecipeDetails.css";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const baseURL = "http://localhost:8080/api/";
 
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RecipeDetails = () => {
+  const [isFavorite, setIsFavorite] = useState(false);
   const signIn = useSignIn();
   const classes = useStyles();
   const isAuthenticated = useIsAuthenticated();
@@ -52,6 +54,18 @@ const RecipeDetails = () => {
   const viewInstructions = (rid) => {
     let link = "http://localhost:3000/instructions/" + rid;
     window.location.href = link;
+  };
+
+  const checkFavorite = () => {
+    // Your logic to check if it's favorited goes here
+    // For example, you can check if the recipe id exists in a favorites list
+    // and return true or false accordingly
+    return isFavorite;
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    // Your logic to handle toggling the favorite state goes here
   };
 
   useEffect(() => {
@@ -403,7 +417,20 @@ const RecipeDetails = () => {
 
   return (
     <div className="recipe-container">
-      <h4 className="recipe-title">{recipe.title}</h4>
+      <h4 className="recipe-title">
+        {recipe.title}
+        <span
+          className={`favorite-icon ${checkFavorite() ? "filled" : ""}`}
+          onClick={toggleFavorite}
+          style={{ marginLeft: "25px" }}
+        >
+          {checkFavorite() ? (
+            <FaHeart style={{ color: "red" }} />
+          ) : (
+            <FaRegHeart style={{ color: "red" }} />
+          )}
+        </span>
+      </h4>
       <div className="recipe-content">
         <img className="recipe-image" src={recipe.image} alt="Recipe" />
         <div className="recipe-details">
