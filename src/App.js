@@ -11,7 +11,7 @@ import SearchPage from "./pages/SearchPage";
 
 export default function App() {
   return (
-    <div>
+    <div style={{ background: "#90ee90", minHeight: "100vh" }}>
       <Header />
       <BrowserRouter>
         <Routes>

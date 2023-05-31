@@ -1,0 +1,31 @@
+.recipe-instructions-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.recipe-instructions-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.recipe-instructions-image {
+  width: 25%;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.recipe-instructions-step {
+  margin-bottom: 10px;
+}
+
+.recipe-instructions-step-number {
+  font-weight: bold;
+}
+
+.recipe-instructions-step-text {
+  margin-left: 10px;
+}
