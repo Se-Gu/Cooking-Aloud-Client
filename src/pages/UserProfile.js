@@ -62,7 +62,7 @@ const UserProfile = () => {
         "Content-Type": "application/json",
       },
     });
-    setFavorites(response.data.data.favmeals)
+    setFavorites(response.data.data.favmeals);
     console.log(response.data.data.favmeals);
   };
 
@@ -71,24 +71,23 @@ const UserProfile = () => {
 
     const response = fetchFavorites().catch(console.error);
     //const response2 = fetchResults().catch(console.error);
-
   }, []);
 
   return (
     <div className="search-results-container">
-      <h4 className="search-results-title">
-        Favorite Meals
-      </h4>
+      <h4 className="search-results-title">Favorite Meals</h4>
       <div className="search-results-list">
-        {favorites?.map((recipe, index) => (
-          <a
-            key={recipe.mealid}
-            className="search-result-item"
-            href={`http://localhost:3000/recipedetails/${recipe.mealid}`}
-          >
-            <span className="search-result-title">{recipe.mealtitle}</span>
-          </a>
-        ))}
+        {favorites?.map((recipe) =>
+          recipe.mealid !== "" ? (
+            <a
+              key={recipe.mealid}
+              className="search-result-item"
+              href={`http://localhost:3000/recipedetails/${recipe.mealid}`}
+            >
+              <span className="search-result-title">{recipe.mealtitle}</span>
+            </a>
+          ) : null
+        )}
       </div>
     </div>
   );
